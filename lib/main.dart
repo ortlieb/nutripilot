@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
+import 'features/recipes/recipe_provider.dart';
+import 'features/recipes/recipe_list_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => RecipeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,24 +39,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.appTitle),
-      ),
-      body: const Center(
-        child: Text('Willkommen bei NutriPilot!'),
-      ),
+      home: const RecipeListScreen(),
     );
   }
 }
